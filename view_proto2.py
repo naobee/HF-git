@@ -2,6 +2,7 @@ from tkinter import *
 import model
 
 cell_size = 5
+is_running = False
 
 def setup():
     global root, grid_view, cell_size, start_button, choice
@@ -31,19 +32,30 @@ def setup():
     clear_button.grid(row=1, column=2, sticky=E, padx=20, pady=20)
     
 def start_handler(event):
-    print("Yup, you clicked on the start button alright.")
-    print("Thanks for stopping by.")
+    global is_running, start_button
+
+    if is_running:
+        is_running = False
+        start_button.configure(text='Start')
+    else:
+        is_running = True
+        start_button.configure(text='Pause')
+        update()
 
 def update():
-    global grid_view
+    global grid_view, root, is_running
 
     grid_view.delete(ALL)
-
     model.next_gen()
+
     for i in range(0, model.height):
         for j in range(0, model.width):
             if model.grid_model[i][j] == 1:
                 draw_cell(i, j, 'black')
+    if is_running:
+        root.after(100,update)
+
+
 
 def draw_cell(row, col, color):
     global grid_view, cell_size
