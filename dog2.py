@@ -79,59 +79,72 @@ class FrisbeeDog(Dog):
             msg = msg + ' and I have a frisbee'
         return msg
 
-### Below lines are test code. ###
-codie = Dog('Codie', 12, 38)
-jackson = Dog('Jackson', 9, 12)
-codie.human_years()
-jackson.human_years()
-print_dog(jackson)
+class Cat():
+    def __init__(self, name):
+        self.name = name
 
-rody = ServiceDog('Rody', 8, 38, 'Joseph')
-print("This dog's name is", rody.name)
-print("This dog's handler is", rody.handler)
-print_dog(rody)
-rody.bark()
-rody.walk()
-rody.human_years()
+    def meow(self):
+        print(self.name, 'Says, "Meow"')
 
-mystery_dog = ServiceDog('Mystery', 5, 13, 'Helen')
+class Hotel:
+    def __init__(self, name):
+        self.name = name
+        self.kennel = {}
+                
+    def check_in(self, dog):
+        if isinstance(dog, Dog):
+            self.kennel[dog.name] = dog
+            print(dog.name, 'is checked into', self.name)
+        else:
+            print('Sorry only Dogs are allowed in', self.name)
+    
+    def check_out(self, name):
+        if name in self.kennel:
+            dog = self.kennel[name]
+            print(dog.name, 'is checked out of', self.name)
+            return dog
+        else:
+            print('Sorry, ', name, 'is not boarding at', self.name)
+            return None
 
-if isinstance(mystery_dog, ServiceDog):
-    print("Yup, it's a ServiceDog")
-else:
-    print('That is no ServiceDog')
+    def barktime(self):
+        for dog_name in self.kennel:
+            dog = self.kennel[dog_name]
+            dog.bark()
 
-if isinstance(mystery_dog, Dog): 
-    print("Yup, it's a Dog")
-else:
-    print('That is no Dog')
 
-if isinstance(mystery_dog, SeeingEyeDog): 
-    print("Yup, it's a SeeingEyeDog")
-else:
-    print('That is no SeeingEyeDog')
 
-print(codie)
-print(jackson)
-print(rody)
-print(mystery_dog)
+### Below lines are test code ###
+def test_code():
+    codie = Dog('Codie', 12, 38)
+    jackson = Dog('Jackson', 9, 12)
+    codie.human_years()
+    jackson.human_years()
+    print_dog(jackson)
+    rody = ServiceDog('Rody', 8, 38, 'Joseph')
+    
+    frisbee = Frisbee('blue')
+    dude = FrisbeeDog('Dude', 5, 20)
+    dude.catch(frisbee)
+    popawi = FrisbeeDog('Popawi', 4, 25,)
+    kitty = Cat('Kitty')
+    hotel = Hotel('Doggie Hotel')
+    hotel.check_in(codie)
+    hotel.check_in(jackson)
+    hotel.check_in(rody)
+    hotel.check_in(dude)
+    hotel.check_in(kitty)
+    
+    hotel.barktime()
 
-rody.bark()
-rody.is_working = True
-rody.bark()
+    dog = hotel.check_out(codie.name)
+    print('Checked out', dog.name, 'who is', dog.age, 'and', dog.weight, 'lbs')
+    dog = hotel.check_out(jackson.name)
+    print('Checked out', dog.name, 'who is', dog.age, 'and', dog.weight, 'lbs')
+    dog = hotel.check_out(rody.name)
+    print('Checked out', dog.name, 'who is', dog.age, 'and', dog.weight, 'lbs')
+    dog = hotel.check_out(dude.name)
+    print('Checked out', dog.name, 'who is', dog.age, 'and', dog.weight, 'lbs')
+    dog = hotel.check_out(popawi.name)
 
-mystery_dog.bark()
-mystery_dog.is_working = True
-mystery_dog.bark()
-
-popawi = FrisbeeDog('Popawi', 5, 26)
-red_frisbee = Frisbee('red')
-
-print(popawi)
-popawi.bark()
-popawi.catch(red_frisbee)
-
-popawi.bark()
-print(popawi)
-popawi.give()
-popawi.bark()
+test_code() 
